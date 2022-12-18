@@ -168,7 +168,24 @@ const SwapModal = ({
     },
   ];
 
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {};
+  const renderTokenRow = (data: token[]) => {
+    return data.map((token, i) => (
+      <div
+        className={`rounded-full border border-gray-200 p-0.5 flex flex-row items-center ${
+          (swapFrom?.symbol === token.symbol ||
+            swapTo?.symbol === token.symbol) &&
+          'bg-gray-200 border-gray-400'
+        } cursor-pointer`}
+        key={`${token.name}-${i}`}
+        onClick={() => selectSwap(token)}
+      >
+        <div>
+          <img src={token.logoURI} className="w-8 h-8 p-1 mr-0.5" alt="" />
+        </div>
+        <div className="text-sm pr-2">{token.symbol}</div>
+      </div>
+    ));
+  };
 
   const renderArr = ({ data, index, style }: any) => {
     if (data[index] !== undefined) {
@@ -249,82 +266,13 @@ const SwapModal = ({
                 <div className="mt-4 space-y-3">
                   <div className="flex flex-col space-y-1 px-6">
                     <div className="flex flex-row space-x-1">
-                      {tokensFirstRow.map((token, i) => (
-                        <div
-                          className={`rounded-full border border-gray-200 p-0.5 flex flex-row items-center ${
-                            (swapFrom?.symbol === token.symbol ||
-                              swapTo?.symbol === token.symbol) &&
-                            'bg-gray-200 border-gray-400'
-                          } cursor-pointer`}
-                          key={`${token.name}-${i}`}
-                          onClick={() => selectSwap(token)}
-                        >
-                          <div>
-                            <img
-                              src={token.logoURI}
-                              className="w-8 h-8 p-1 mr-0.5"
-                              alt=""
-                            />
-                          </div>
-                          <div className="text-sm pr-2">{token.symbol}</div>
-                        </div>
-                      ))}
+                      {renderTokenRow(tokensFirstRow)}
                     </div>
                     <div className="flex flex-row space-x-1">
-                      {tokensSecondRow.map((token, i) => (
-                        <div
-                          className={`rounded-full border border-gray-200 p-0.5 flex flex-row items-center ${
-                            (swapFrom?.symbol === token.symbol ||
-                              swapTo?.symbol === token.symbol) &&
-                            'bg-gray-200 border-gray-400'
-                          } cursor-pointer`}
-                          key={`${token.name}-${i}`}
-                          onClick={() => selectSwap(token)}
-                        >
-                          <div>
-                            <img
-                              src={token.logoURI}
-                              className="w-8 h-8 p-1 mr-0.5"
-                              alt=""
-                            />
-                          </div>
-                          <div className="text-sm pr-2">{token.symbol}</div>
-                        </div>
-                      ))}
+                      {renderTokenRow(tokensSecondRow)}
                     </div>
                   </div>
                   <div className="h-[300px] w-full overflow-auto border-t border-gray-200">
-                    {/* {filteredTokens
-                      ?.filter((token) =>
-                        token.name
-                          .toLowerCase()
-                          .includes(searchKeyword.toLowerCase())
-                      )
-                      .map((token, i) => (
-                        <div
-                          className={`flex flex-row space-x-4 px-6 py-3 items-center cursor-pointer hover:bg-gray-200 transition-all ${
-                            (swapFrom?.symbol === token.symbol ||
-                              swapTo?.symbol === token.symbol) &&
-                            'bg-gray-200 cursor-default'
-                          }`}
-                          key={`${token.name}-${i}`}
-                          onClick={() => selectSwap(token)}
-                        >
-                          <div>
-                            <img
-                              src={token.logoURI}
-                              className="w-8 h-8 rounded-full border border-gray-200"
-                              alt=""
-                            />
-                          </div>
-                          <div className="flex-col">
-                            <div className="font-semibold">{token.name}</div>
-                            <div className="text-sm font-light">
-                              {token.symbol}
-                            </div>
-                          </div>
-                        </div>
-                      ))} */}
                     <List
                       width={384}
                       height={299}
